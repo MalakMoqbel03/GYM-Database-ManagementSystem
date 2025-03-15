@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Schedules</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <a href="/admin_dashboard" class="logo">Fitness Factory Gym</a>
+    <ul class="navbar">
+        <li><a href="/admin_dashboard">Home</a></li>
+        <li><a href="/schedules" class="active">Schedules</a></li>
+        <li><a href="/trainers" class="active">Trainers</a></li>
+    </ul>
+</header>
+
+<section class="schedules">
+    <div class="container">
+        <h2 class="heading">Trainer <span>Schedules</span></h2>
+        {% for trainer in schedules.values() %}
+        <div class="trainer-schedule">
+            <h3>Trainer: {{ trainer.Trainer_Name }}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Class Name</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cls in trainer.Classes %}
+                    <tr>
+                        <td>{{ cls.Class_Name }}</td>
+                        <td>{{ cls.Start_Time }}</td>
+                        <td>{{ cls.End_Time }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+</body>
+</html>

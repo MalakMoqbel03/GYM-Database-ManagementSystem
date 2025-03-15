@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Classes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .tab-link {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #ddd;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .tab-link.active {
+            background-color: #132629;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .class-card {
+            margin: 15px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .reserve-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 10px;
+            background-color: #132629;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reserve-btn:disabled {
+            background-color: #bbb;
+            cursor: not-allowed;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #f4f4f9;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <a href="/trainee/{{ trainee_id }}/dashboard" class="logo">Fitness Factory Gym</a>
+    <ul class="navbar">
+        <li><a href="/trainee/{{ trainee_id }}/dashboard" class="active">Home</a></li>
+    </ul>
+</header>
+
+<section class="classes" id="classes">
+    <div class="container">
+        <h2 class="heading">Weekly <span>Classes</span></h2>
+
+        <!-- Tabs -->
+        <ul class="tabs">
+            <li class="tab-link active" data-tab="monday-wednesday">Monday & Wednesday</li>
+            <li class="tab-link" data-tab="tuesday-thursday">Tuesday & Thursday</li>
+            <li class="tab-link" data-tab="friday-sunday">Friday & Sunday</li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div id="tab-contents">
+            <!-- Monday & Wednesday -->
+            <div class="tab-content active" id="monday-wednesday">
+                {% for cls in classes_by_day["Monday"] %}
+                <div class="class-card">
+                    <div>
+                        <h4>{{ cls.Class_Name }}</h4>
+                        <p>Trainer: {{ cls.Trainer_First_Name }} {{ cls.Trainer_Last_Name }}</p>
+                        <p>Time: {{ cls.Start_Time }} - {{ cls.End_Time }}</p>
+                        <p>Capacity: {{ cls.Capacity }}</p>
+                    </div>
+                    <form method="POST" action="/reserve_class/{{ cls.Class_ID }}/{{ trainee_id }}">
+                        <button type="submit" class="reserve-btn" {% if cls.Capacity <= 0 %}disabled{% endif %}>
+                            {% if cls.Capacity > 0 %}Reserve{% else %}Full{% endif %}
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+                {% for cls in classes_by_day["Wednesday"] %}
+                <div class="class-card">
+                    <div>
+                        <h4>{{ cls.Class_Name }}</h4>
+                        <p>Trainer: {{ cls.Trainer_First_Name }} {{ cls.Trainer_Last_Name }}</p>
+                        <p>Time: {{ cls.Start_Time }} - {{ cls.End_Time }}</p>
+                        <p>Capacity: {{ cls.Capacity }}</p>
+                    </div>
+                    <form method="POST" action="/reserve_class/{{ cls.Class_ID }}/{{ trainee_id }}">
+                        <button type="submit" class="reserve-btn" {% if cls.Capacity <= 0 %}disabled{% endif %}>
+                            {% if cls.Capacity > 0 %}Reserve{% else %}Full{% endif %}
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Tuesday & Thursday -->
+            <div class="tab-content" id="tuesday-thursday">
+                {% for cls in classes_by_day["Tuesday"] %}
+                <div class="class-card">
+                    <div>
+                        <h4>{{ cls.Class_Name }}</h4>
+                        <p>Trainer: {{ cls.Trainer_First_Name }} {{ cls.Trainer_Last_Name }}</p>
+                        <p>Time: {{ cls.Start_Time }} - {{ cls.End_Time }}</p>
+                        <p>Capacity: {{ cls.Capacity }}</p>
+                    </div>
+                    <form method="POST" action="/reserve_class/{{ cls.Class_ID }}/{{ trainee_id }}">
+                        <button type="submit" class="reserve-btn" {% if cls.Capacity <= 0 %}disabled{% endif %}>
+                            {% if cls.Capacity > 0 %}Reserve{% else %}Full{% endif %}
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+                {% for cls in classes_by_day["Thursday"] %}
+                <div class="class-card">
+                    <div>
+                        <h4>{{ cls.Class_Name }}</h4>
+                        <p>Trainer: {{ cls.Trainer_First_Name }} {{ cls.Trainer_Last_Name }}</p>
+                        <p>Time: {{ cls.Start_Time }} - {{ cls.End_Time }}</p>
+                        <p>Capacity: {{ cls.Capacity }}</p>
+                    </div>
+                    <form method="POST" action="/reserve_class/{{ cls.Class_ID }}/{{ trainee_id }}">
+                        <button type="submit" class="reserve-btn" {% if cls.Capacity <= 0 %}disabled{% endif %}>
+                            {% if cls.Capacity > 0 %}Reserve{% else %}Full{% endif %}
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Friday & Sunday -->
+            <div class="tab-content" id="friday-sunday">
+                {% for cls in classes_by_day["Friday"] %}
+                <div class="class-card">
+                    <div>
+                        <h4>{{ cls.Class_Name }}</h4>
+                        <p>Trainer: {{ cls.Trainer_First_Name }} {{ cls.Trainer_Last_Name }}</p>
+                        <p>Time: {{ cls.Start_Time }} - {{ cls.End_Time }}</p>
+                        <p>Capacity: {{ cls.Capacity }}</p>
+                    </div>
+                    <form method="POST" action="/reserve_class/{{ cls.Class_ID }}/{{ trainee_id }}">
+                        <button type="submit" class="reserve-btn" {% if cls.Capacity <= 0 %}disabled{% endif %}>
+                            {% if cls.Capacity > 0 %}Reserve{% else %}Full{% endif %}
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+                {% for cls in classes_by_day["Sunday"] %}
+                <div class="class-card">
+                    <div>
+                        <h4>{{ cls.Class_Name }}</h4>
+                        <p>Trainer: {{ cls.Trainer_First_Name }} {{ cls.Trainer_Last_Name }}</p>
+                        <p>Time: {{ cls.Start_Time }} - {{ cls.End_Time }}</p>
+                        <p>Capacity: {{ cls.enrolled_count }}/{{ cls.Capacity }}</p>
+                    </div>
+                    {% if cls.enrolled_count < cls.Capacity %}
+                    <form method="POST" action="/reserve_class/{{ cls.Class_ID }}/{{ trainee_id }}">
+                        <button type="submit" class="reserve-btn">Reserve</button>
+                    </form>
+                    {% else %}
+                    <button class="reserve-btn" disabled>Full</button>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<div id="alreadyReservedModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <p>You've already joined this class!</p>
+    </div>
+</div>
+
+<script>
+    // Tab switching logic
+    const tabs = document.querySelectorAll('.tab-link');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            const target = tab.getAttribute('data-tab');
+            tab.classList.add('active');
+            document.getElementById(target).classList.add('active');
+        });
+    });
+
+    // Modal logic
+    function showModal(message) {
+        const modal = document.getElementById("alreadyReservedModal");
+        const modalText = modal.querySelector("p");
+        modalText.textContent = message;
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("alreadyReservedModal");
+        modal.style.display = "none";
+    }
+
+    // Handle AJAX form submission
+    document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const actionUrl = this.action;
+
+            fetch(actionUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "error") {
+                    showModal(data.message);
+                } else if (data.status === "success") {
+                    window.location.href = data.redirect_url;
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    });
+</script>
+</body>
+</html>

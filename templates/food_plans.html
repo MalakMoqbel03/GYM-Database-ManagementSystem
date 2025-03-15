@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Plans</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* General body styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f3f3f3;
+            color: #132629;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #aba174;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        header .nav-links a {
+            font-size: 1.4rem;
+            color: #ffffff;
+            text-decoration: none;
+            margin-right: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        header .nav-links a:hover {
+            background-color: #ffffff;
+            color: #aba174;
+        }
+
+        /* Content section */
+        .content {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(to bottom right, #d6d8d4, #ffffff);
+        }
+
+        .content h1 {
+            font-size: 4rem;
+            color: #132629;
+            margin-bottom: 30px;
+        }
+
+        .content p {
+            font-size: 1.5rem;
+            margin: 20px auto;
+            color: #46514a;
+            line-height: 2;
+            max-width: 800px; /* Added max-width for better readability */
+        }
+
+        .highlight {
+            color: #aba174;
+            font-weight: bold;
+        }
+
+        /* Plans section */
+        .plans {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin: 60px 20px;
+        }
+
+        .plan-card {
+            background: #ffffff;
+            border: 3px solid #aba174;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .plan-card h2 {
+            font-size: 2.5rem;
+            color: #132629;
+            margin-bottom: 15px;
+        }
+
+        .plan-card p {
+            font-size: 1.4rem;
+            color: #46514a;
+            margin: 20px 0;
+        }
+
+        .plan-card .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #aba174;
+            margin: 25px 0;
+        }
+
+        .plan-card .subscribe-btn {
+            background-color: #132629;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .plan-card .subscribe-btn:hover {
+            background-color: #aba174;
+            color: #132629;
+        }
+
+        /* Footer section */
+        footer {
+            background-color: #aba174;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="/" class="logo">Fitness Factory Gym</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+        </div>
+    </header>
+
+    <!-- Content Section -->
+    <div class="content">
+        <h1>Discover Our Food Plans</h1>
+        <p>
+            Welcome to <span class="highlight">Fitness Factory Gym</span> Food Plans! We provide carefully designed meal plans to help you achieve your fitness goals while maintaining a healthy lifestyle.
+        </p>
+        <p>
+            Whether you're looking for a short-term boost or a long-term commitment, we have <span class="highlight">Weekly</span> and <span class="highlight">Monthly</span> plans tailored to your needs. Explore our offerings and choose the plan that fits your journey.
+        </p>
+    </div>
+
+    <!-- Plans Section -->
+    <div class="plans">
+        <!-- Weekly Plan Card -->
+        <div class="plan-card">
+            <h2>Weekly Plan</h2>
+            <p>
+                Perfect for short-term goals. Enjoy a variety of nutritious meals every day, curated by our expert nutritionists.
+            </p>
+            <p class="price">$20 / Week</p>
+        </div>
+
+        <!-- Monthly Plan Card -->
+        <div class="plan-card">
+            <h2>Monthly Plan</h2>
+            <p>
+                Commit to a healthier lifestyle! Get long-term savings and enjoy the convenience of monthly meal deliveries.
+            </p>
+            <p class="price">$75 / Month</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Fitness Factory Gym. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

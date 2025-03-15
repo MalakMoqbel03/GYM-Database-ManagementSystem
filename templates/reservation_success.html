@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Successful</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: 50px auto;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        h1 {
+            color: #132629;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #132629;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0d1e21;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reservation Successful!</h1>
+        <p>You have successfully reserved the class <strong>{{ class_name }}</strong> with Trainer <strong>{{ trainer_name }}</strong>.</p>
+        
+        <div class="btn-group">
+            <a href="/trainee/{{ trainee_id }}/dashboard" class="btn">Go to Dashboard</a>
+            <a href="/trainee/{{ trainee_id }}/cart" class="btn">View Cart</a>
+            <form method="POST" action="/delete_reservation/{{ trainee_id }}/{{ class_id }}" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Delete Reservation</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

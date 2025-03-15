@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Subscriptions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <style>
+        /* Custom Styling */
+        body {
+            background-color: #d6d8d4;
+            font-family: 'Times New Roman', sans-serif;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 1px;
+            background: rgba(214, 216, 212, 0.9);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header a.logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: #132629;
+        }
+
+        header .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        header .nav-links a {
+            color: #132629;
+            font-size: 1.4rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 5px 10px;
+        }
+
+        header .nav-links a:hover {
+            color: #aba174;
+        }
+
+        .plans-section {
+            background: #d6d8d4;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.7);
+        }
+
+        .plans-section h2 {
+            font-size: 2.8rem;
+            color: #132629;
+            margin-bottom: 30px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .tab-buttons button {
+            border: 2px solid #46514a;
+            color: #46514a;
+            background: transparent;
+            border-radius: 30px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .tab-buttons button.active,
+        .tab-buttons button:hover {
+            background: #132629;
+            color: white;
+        }
+
+        .plan-card {
+            background: linear-gradient(145deg, #f0f3f5, #d6d8d4);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.5);
+            text-align: left;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .plan-card h2 {
+            font-size: 2rem;
+            color: #132629;
+            margin-bottom: 10px;
+        }
+
+        .plan-card h4 {
+            font-size: 1.5rem;
+            color: #46514a;
+            margin-bottom: 15px;
+        }
+
+        .plan-card p {
+            font-size: 1.2rem;
+            color: #646464;
+            margin-bottom: 20px;
+        }
+
+        .plan-card button {
+            background-color: #132629;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .plan-card button:hover {
+            background-color: #aba174;
+            color: #132629;
+            transform: scale(1.05);
+        }
+
+        .plans-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4caf50; /* Green for success */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 1rem;
+            display: none;
+            z-index: 2000;
+        }
+
+        .notification.error {
+            background-color: #f44336; /* Red for error */
+        }
+    </style>
+</head>
+<body>
+<header>
+    <a href="/trainee/{{ trainee.Trainee_ID }}/dashboard" class="logo">Fitness Factory Gym</a>
+    <div class="nav-links">
+        <a href="/trainee/{{ trainee.Trainee_ID }}/dashboard">Home</a>
+        <a href="/logout">Logout</a>
+    </div>
+</header>
+
+<div class="plans-section">
+    <h2>Choose Your Ideal Food Plan!</h2>
+    <div class="tab-buttons">
+        <button id="weeklyTab" class="active" onclick="showPlans('weekly')">Weekly</button>
+        <button id="monthlyTab" onclick="showPlans('monthly')">Monthly</button>
+    </div>
+    <div class="container">
+        <div id="plansContainer">
+            <!-- Weekly Plans -->
+            <div class="plans-container" data-plan-type="weekly">
+                {% for subscription in subscriptions %}
+                    {% if subscription['Subscription_Type'] == 'Weekly' %}
+                        <div class="plan-card">
+                            <h2>${{ subscription['price'] }}</h2>
+                            <h4>{{ subscription['meal_option'] }}</h4>
+                            <p>{{ subscription['meal_description'] }}</p>
+                            <form action="{{ url_for('subscribe_food_plan', trainee_id=trainee.Trainee_ID, subscription_id=subscription.Subscription_ID) }}" method="POST">
+                                <button type="submit">Choose Plan</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <!-- Monthly Plans -->
+            <div class="plans-container" data-plan-type="monthly" style="display: none;">
+                {% for subscription in subscriptions %}
+                    {% if subscription['Subscription_Type'] == 'Monthly' %}
+                        <div class="plan-card">
+                            <h2>${{ subscription['price'] }}</h2>
+                            <h4>{{ subscription['meal_option'] }}</h4>
+                            <p>{{ subscription['meal_description'] }}</p>
+                            <form action="{{ url_for('subscribe_food_plan', trainee_id=trainee.Trainee_ID, subscription_id=subscription.Subscription_ID) }}" method="POST">
+                                <button type="submit">Choose Plan</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification -->
+<div id="notification" class="notification"></div>
+
+<script>
+    function showPlans(planType) {
+        document.getElementById('weeklyTab').classList.remove('active');
+        document.getElementById('monthlyTab').classList.remove('active');
+        document.getElementById(planType + 'Tab').classList.add('active');
+        document.querySelectorAll('.plans-container').forEach(container => {
+            container.style.display = container.getAttribute('data-plan-type') === planType ? 'flex' : 'none';
+        });
+    }
+
+    // Show notification if there's a message in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get('message');
+    if (message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+
+        // Add error styling if the message indicates an error
+        if (message.toLowerCase().includes('error') || message.toLowerCase().includes('unauthorized')) {
+            notification.classList.add('error');
+        }
+
+        // Show the notification
+        notification.style.display = 'block';
+
+        // Hide after 3 seconds
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Registered</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h2 class="heading">Trainer Registered Successfully!</h2>
+    <p>Trainer successfully registered with ID {{ trainer_id }}.</p>
+    <div class="button-group">
+        <a href="/trainers" class="btn">Show All Trainers</a>
+        <a href="/trainers/register" class="btn">Register Another Trainer</a>
+        <a href="/schedules" class="btn">View Trainers' Schedules</a>
+        <a href="/admin_dashboard" class="btn">Go to Homepage</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Factory Gym</title>
+    <style>
+        /* General body styling */
+        body {
+            margin: 0;
+            font-family: "Times New Roman", Times, serif;
+            background: url('/static/images/plan_image.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #e9eae4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+        }
+
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        ul.navbar {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        ul.navbar li {
+            display: inline-block;
+        }
+
+        ul.navbar li a {
+            text-decoration: none;
+            color: #7d9483;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        ul.navbar li a:hover {
+            color: #2c3e50;
+        }
+
+        ul.navbar li a.active {
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .join-btn {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .join-btn:hover {
+            background-color: #7d9483;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: bold;
+            padding: 5px 0;
+        }
+
+        .plans-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        .plan-card {
+            background: #f6f6f1;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+            max-width: 350px;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .plan-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .plan-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+        }
+
+        .plan-price {
+            font-size: 1.8rem;
+            color: #222;
+            margin: 0.8rem 0;
+        }
+
+        .plan-details {
+            list-style: none;
+            padding: 0;
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .subscribe-plan {
+            background-color: #333;
+            color: #f6f6f1;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-plan:hover {
+            background-color: #555;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 1rem;
+            display: none;
+            z-index: 2000;
+        }
+
+        .notification.error {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">FITNESS FACTORY GYM</a>
+        <ul class="navbar">
+            <li><a href="/trainee/{{ trainee.Trainee_ID }}/dashboard" class="active">Home</a></li>
+            </li><a href="/trainee/{{ trainee.Trainee_ID }}/classes">View Classes</a></li>
+            </li><a href="/trainee/{{ trainee.Trainee_ID }}/food_subscriptions">Food Subscription</a></li>
+        </ul>
+        <a href="/trainee/{{ trainee.Trainee_ID }}/cart" class="cart">Cart</a>
+    </header>
+
+    <h1>Gym Membership Plans</h1>
+
+    <div class="plans-container">
+        {% for plan in plans %}
+        <div class="plan-card">
+            <div class="plan-title">{{ plan.membership_type }}</div>
+            <div class="plan-price">${{ plan.price }}</div>
+            <ul class="plan-details">
+                <li>Class Tiers: {{ plan.class_tiers }}</li>
+            </ul>
+            <form action="{{ url_for('subscribe_plan', trainee_id=trainee.Trainee_ID, membership_id=plan.membership_id) }}" method="POST">
+                <button type="submit" class="subscribe-plan">Subscribe</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        if (message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+
+            if (message.toLowerCase().includes('error') || message.toLowerCase().includes('unauthorized')) {
+                notification.classList.add('error');
+            }
+
+            notification.style.display = 'block';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

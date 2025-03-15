@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Fitness Factory Gym</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+            background: url('/static/images/AboutUs.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #e9eae4;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header a.logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        header ul.navbar {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        header ul.navbar li a {
+            text-decoration: none;
+            color: #7d9483;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+
+        header ul.navbar li a:hover,
+        header ul.navbar li a.active {
+            color: #2c3e50;
+            text-decoration: underline;
+        }
+
+        .join-us {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #2c3e50;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .join-us:hover {
+            background-color: #7d9483;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: white;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero img {
+            max-width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 1.5rem 1rem;
+            text-align: center;
+            color: white;
+            background: rgba(0, 0, 0, 0.6);
+            margin: 1rem auto;
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .section p {
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        footer div {
+            flex: 1 1 200px;
+            text-align: center;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">FITNESS FACTORY GYM</a>
+        <ul class="navbar">
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+           
+        </ul>
+        <a href="/join_us" class="join-us">Join Us</a>
+    </header>
+
+    <div class="hero">
+        <img src="/static/images/Logo.png" alt="Gym Logo">
+        <h1>Fitness Factory Gym</h1>
+        <p>Strong. Healthy. Happy.</p>
+    </div>
+
+    <div class="section">
+        <h2>About Us</h2>
+        <p>
+            Fitness Factory Gym in Ramallah provides world-class fitness facilities to help you achieve your health and wellness goals. With top-notch equipment and certified trainers, we offer programs for Yoga, Crossfit, Cardio, and more. Join us in creating a welcoming environment where fitness is a lifestyle!
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Subscriptions</h2>
+        <p><strong>Gym Plans:</strong> Tailored to fit your lifestyle, from Basic to VIP memberships.</p>
+        <p><strong>Food Plans:</strong> Healthy meal options, including Vegan, Keto, and Gluten-Free.</p>
+        <p><strong>Combined Plans:</strong> Enjoy gym access with personalized meal plans for total wellness.</p>
+    </div>
+
+    <div class="section">
+        <h2>Contact Info</h2>
+        <div style="display: flex; justify-content: space-around; gap: 20px; flex-wrap: wrap;">
+            <div>
+                <h3>Address</h3>
+                <p>Ramallah, Palestine, 00970</p>
+                <p>Behind Al-Huda Gas Station</p>
+            </div>
+            <div>
+                <h3>Phone</h3>
+                <p>02 292 3267</p>
+            </div>
+            <div>
+                <h3>Email</h3>
+                <p><a href="mailto:fitnessfactoryps@gmail.com">fitnessfactoryps@gmail.com</a></p>
+            </div>
+            <div>
+                <h3>Social Links</h3>
+                <p><a href="https://instagram.com/ffactory.ps" target="_blank">Instagram: ffactory.ps</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>&copy; 2024 Fitness Factory Gym</div>
+        <div><a href="/privacy">Privacy Policy</a></div>
+        <div><a href="/terms">Terms of Service</a></div>
+    </footer>
+</body>
+</html>

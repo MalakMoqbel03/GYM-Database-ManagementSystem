@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainee Schedule</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">Fitness Factory Gym</a>
+        <ul class="navbar">
+            <li><a href="/">Home</a></li>
+            <li><a href="/classes">Classes</a></li>
+            <li><a href="/trainee_schedule/{{ trainee.Trainee_ID }}" class="active">My Schedule</a></li>
+        </ul>
+    </header>
+
+    <section class="schedule" id="schedule">
+        <div class="container">
+            <h2 class="heading">Schedule for <span>{{ trainee.First_Name }} {{ trainee.Last_Name }}</span></h2>
+            <ul class="class-list">
+                {% for cls in classes %}
+                <li class="class-card">
+                    <h4>{{ cls.Class_Name }}</h4>
+                    <p>Trainer: {{ cls.Trainer_First_Name }} {{ cls.Trainer_Last_Name }}</p>
+                    <p>Time: {{ cls.Start_Time }} - {{ cls.End_Time }}</p>
+                    <p>Date Enrolled: {{ cls.Date_Enrollment }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+</body>
+</html>

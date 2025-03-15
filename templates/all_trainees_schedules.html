@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Trainees Schedules</title>
+    <style>
+        :root {
+            --main-bg: #f9f9f9;
+            --card-bg: #ffffff;
+            --primary-color: #132629;
+            --secondary-color: #aba174;
+            --text-color: #46514a;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Times New Roman', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--main-bg);
+            color: var(--text-color);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: rgba(214, 216, 212, 0.9);
+            position: fixed;
+            top: 0;
+            width: 98%;
+            z-index: 1000;
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        header .navbar {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 20px;
+        }
+
+        header .navbar li {
+            list-style: none;
+        }
+
+        header .navbar a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+
+        header .navbar a.active,
+        header .navbar a:hover {
+            color: var(--secondary-color);
+        }
+
+        section.schedule {
+            margin-top: 100px;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .heading {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .search-form input,
+        .search-form button {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid var(--shadow-color);
+            border-radius: 5px;
+        }
+
+        .trainee-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-top: 1px solid var(--shadow-color);
+        }
+
+        .trainee-card {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--shadow-color);
+        }
+
+        .trainee-card:last-child {
+            border-bottom: none;
+        }
+
+        .trainee-card h4 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin: 0 0 5px;
+        }
+
+        .trainee-card p {
+            font-size: 1rem;
+            margin: 3px 0;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">Fitness Factory Gym</a>
+        <ul class="navbar">
+            <li><a href="/admin_dashboard">Home</a></li>
+            <li><a href="/trainees" class="active">Trainees</a></li>
+        </ul>
+    </header>
+
+    <section class="schedule" id="schedule">
+        <div class="container">
+            <h2 class="heading">All Trainees <span>Schedules</span></h2>
+
+            <!-- Search Form -->
+            <form class="search-form" method="GET" action="/trainee_schedules">
+                <input type="text" name="search_name" placeholder="Search by Name">
+                <input type="text" name="search_course" placeholder="Search by Course">
+                <input type="time" name="search_time" placeholder="Search by Time">
+                <button type="submit">Search</button>
+            </form>
+
+            <ul class="trainee-list">
+                {% for schedule in schedules %}
+                <li class="trainee-card">
+                    <h4>{{ schedule.First_Name }} {{ schedule.Last_Name }}</h4>
+                    <p><strong>Class:</strong> {{ schedule.Class_Name }}</p>
+                    <p><strong>Trainer:</strong> {{ schedule.Trainer_First_Name }} {{ schedule.Trainer_Last_Name }}</p>
+                    <p><strong>Time:</strong> {{ schedule.Start_Time }} - {{ schedule.End_Time }}</p>
+                    <p><strong>Date Enrolled:</strong> {{ schedule.Date_Enrollment }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+
+            {% if not schedules %}
+            <p style="text-align: center; color: var(--primary-color);">No results found for your search criteria.</p>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>

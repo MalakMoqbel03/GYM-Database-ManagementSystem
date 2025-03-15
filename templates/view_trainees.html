@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Trainees</title>
+    <style>
+        :root {
+            --bg-color: rgba(255, 255, 255, 0.9);
+            --card-bg: #ffffff;
+            --text-color: #132629;
+            --main-color: #2b6777;
+            --button-color: #aba174;
+            --shadow-color: rgba(0, 0, 0, 0.15);
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color:  var(--shadow-color);
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid var(--text-color);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #2b6777;
+            color: white;
+        }
+        .btn-header {
+            padding: 0.5rem 1rem;
+            background-color: var(--main-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+
+        .btn-header:hover {
+            background-color: var(--button-color);
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--main-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+           
+        }
+        .tabs button {
+            padding: 10px 20px;
+            background-color: var(--main-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .tabs button.active {
+            background-color: var(--button-color);
+        }
+
+        .btn-class{
+            background-color: var(--main-color);
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ class_details.Class_Name }}</h1>
+    <h2>Time: {{ class_details.Start_Time }} - {{ class_details.End_Time }}</h2>
+
+    {% if trainees %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+        </tr>
+        {% for trainee in trainees %}
+        <tr>
+            <td>{{ trainee.First_Name }} {{ trainee.Last_Name }}</td>
+            <td>{{ trainee.Phone_Number }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p style="text-align: center;">No trainees have enrolled for this class yet.</p>
+    {% endif %}
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/trainer/{{ session.get('trainer_id') }}/classes" class="btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Admin Report</title>
+    <style>
+        body {
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9fafb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px; /* Increase the container width */
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    font-size: 1.8rem; /* Reduce the font size for the main title */
+    margin-bottom: 20px;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px; /* Add more spacing between cards */
+    margin-bottom: 30px;
+}
+
+.card {
+    flex: 1 1 calc(22% - 20px); /* Reduce the card width */
+    background: #2b6777;
+    color: #fff;
+    text-align: center;
+    padding: 20px; /* Reduce padding inside the cards */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+    font-size: 2rem; /* Reduce the size of numbers/text */
+    margin: 0;
+    color: #ffffff;
+}
+
+.card p {
+    font-size: 1rem; /* Reduce the size of the card descriptions */
+    margin: 10px 0 0;
+    color: #aba174;
+}
+
+.chart-section {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* Add more spacing between charts */
+    justify-content: center;
+}
+
+.chart {
+    flex: 1 1 calc(45% - 20px); /* Make charts smaller */
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px; /* Reduce padding inside charts */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart h3 {
+    text-align: center;
+    margin-bottom: 10px; /* Reduce margin below chart titles */
+    color: #333;
+    font-size: 1.2rem; /* Reduce font size of chart titles */
+}
+
+   
+.card i, .card span.material-icons {
+    font-size: 3rem; /* Adjust icon size */
+    color: #ffffff; /* Icon color */
+    margin-bottom: 10px; /* Space between icon and heading */
+    display: block; /* Ensure the icon is centered */
+}
+.chart canvas {
+    width: 250px; /* Adjust width */
+    height: 250px; /* Adjust height */
+    margin: 0 auto; /* Center align */
+    display: block; /* Ensure proper centering */
+}
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin's Report</h1>
+        <div class="cards">
+            <div class="card" >
+                <span class="material-icons md-48">person</span>
+                <h2>{{ total_trainers.total_trainers }}</h2>
+                <p>Total Trainers</p>
+            </div>
+            <div class="card">
+                <span class="material-icons md-48">groups</span> 
+                <h2>{{ total_trainees.total_trainees }}</h2>
+                <p>Total Trainees</p>
+            </div>
+            <div class="card">
+                <span class="material-icons md-48">fitness_center</span>
+                <h2>{{ most_popular_class.Class_Name }}</h2>
+                <p>Most Popular Class</p>
+            </div>
+            <div class="card">
+                <span class="material-icons md-48">event</span>
+                    <h2>{{ busiest_day.Day }}</h2> <!-- Access the "day" key -->
+                    <p>Busiest Day ({{ busiest_day.total_classes }} classes)</p>
+            </div>
+            <div class="card" >
+                <span class="material-icons md-48">school</span>
+                <h2>{{ average_class_size.average_class_size}}</h2>
+                <p>Average Class Size</p>
+            </div>
+            <div class="card" >
+                    <span class="material-icons md-48">person</span>
+                    <h2>{{ inactive_trainees.inactive_trainees}}</h2>
+                    <p>Inactive trainees</p>
+            </div>
+            <div class="card" style="background-color: #2b6777;">
+                <i class="fas fa-dollar-sign fa-3x" style="color: #2b9348;"></i>
+                <h2 style="color: #2b9348;" id="revenueAmount">$0</h2> <!-- Starts at $0 -->
+                <p>Total Revenue</p>
+            </div>
+            
+
+        </div>
+        
+
+        <div class="chart-section">
+            <div class="chart">
+                <h3>Paid vs Unpaid Bills</h3>
+                <canvas id="billsChart"></canvas>
+            </div>
+            <div class="chart">
+                <h3>Trainer Engagement</h3>
+                <canvas id="trainerChart"></canvas>
+            </div>
+            <div class="chart">
+                <h3>Trainee Growth Over Time</h3>
+                <canvas id="traineeChart"></canvas>
+            </div>
+            <div class="chart">
+                <h3>Revenues vs. Expenses</h3>
+                <canvas id="financeChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script>
+        // Animate the revenue number
+const revenueAmount = {{ revenue_generated.total_revenue or 0 }};
+const revenueElement = document.getElementById('revenueAmount');
+let count = 0;
+const increment = Math.ceil(revenueAmount / 100); // Adjust increment speed
+const interval = setInterval(() => {
+    count += increment;
+    if (count >= revenueAmount) {
+        revenueElement.textContent = `$${revenueAmount.toLocaleString()}`; // Format with commas
+        clearInterval(interval);
+    } else {
+        revenueElement.textContent = `$${count.toLocaleString()}`;
+    }
+}, 20); // Adjust speed (milliseconds)
+
+        // Paid vs. Unpaid Bills Chart
+        const billsCtx = document.getElementById('billsChart').getContext('2d');
+        new Chart(billsCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Paid', 'Unpaid'],
+                datasets: [{
+                    data: [{{ bills_status.paid | default(0) }}, {{ bills_status.unpaid | default(0) }}],
+                    backgroundColor: ['#2b6777', '#ff4d4d']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Trainer Engagement Chart
+        console.log("Trainer Engagement Data:", {{ trainer_engagement | tojson }});
+        const trainerCtx = document.getElementById('trainerChart').getContext('2d');
+        new Chart(trainerCtx, {
+            type: 'bar',
+            data: {
+                labels: {{ trainer_engagement | map(attribute='trainer_name') | list | tojson }},
+                datasets: [{
+                    label: 'Classes Conducted',
+                    data: {{ trainer_engagement | map(attribute='classes_count') | list | tojson }},
+                    backgroundColor: '#2b6777'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Trainee Growth Over Time Chart
+        console.log("Trainee Growth Data:", {{ trainee_growth | tojson }});
+        const traineeCtx = document.getElementById('traineeChart').getContext('2d');
+        new Chart(traineeCtx, {
+            type: 'line',
+            data: {
+                labels: {{ trainee_growth | map(attribute='month') | list | tojson }},
+                datasets: [{
+                    label: 'New Trainees',
+                    data: {{ trainee_growth | map(attribute='total_trainees') | list | tojson }},
+                    borderColor: '#2b6777',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        const financeCtx = document.getElementById('financeChart').getContext('2d');
+    new Chart(financeCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Revenues', 'Expenses'],
+            datasets: [{
+                label: 'Amount (in USD)',
+                data: [{{ finance_data.total_revenue or 0 }}, {{ finance_data.total_expenses or 0 }}],
+                backgroundColor: ['#2b9348', '#ff4d4d']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Trainer Payment Schedule</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Times New Roman', sans-serif;
+            background-color: #d6d8d4;
+            color: #132629;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            color: #132629;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #132629;
+            font-size: 2rem;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        table th {
+            background-color: #132629;
+            color: #fff;
+        }
+
+        .status-paid {
+            background-color: #c8e6c9; /* Light Green */
+            color: #2e7d32;
+        }
+
+        .status-unpaid {
+            background-color: #ffcdd2; /* Light Red */
+            color: #c62828;
+        }
+
+        .control-btn {
+            background-color: #ff9800;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background-color: #132629;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #aba174;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #132629;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Trainer Payment Schedule</h2>
+        <p><strong>Trainer:</strong> {{ trainer_name }} | <strong>Salary:</strong> ${{ salary }}</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Payment ID</th>
+                        <th>Payment Amount</th>
+                        <th>Payment Date</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Control</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr class="{% if payment.PaymentStatus == 'Paid' %}status-paid{% else %}status-unpaid{% endif %}">
+                        <td>{{ payment.Payment_ID }}</td>
+                        <td>${{ payment.PaymentAmount }}</td>
+                        <td>{{ payment.Payment_Date }}</td>
+                        <td>{{ payment.PaymentDue_Date }}</td>
+                        <td>{{ payment.PaymentStatus }}</td>
+                        <td>
+                            <!-- Control for Admin to toggle payment status -->
+                            <form action="/update_payment_status/{{ payment.Payment_ID }}" method="POST" style="display:inline;">
+                                <input type="checkbox" name="payment_status" {% if payment.PaymentStatus == 'Paid' %}checked{% endif %} onchange="this.form.submit()">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/admin/trainers" class="back-btn">Back to Trainers</a>
+        </div>
+    </div>
+</body>
+</html>

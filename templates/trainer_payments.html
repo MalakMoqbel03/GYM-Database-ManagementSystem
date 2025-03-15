@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Payment Schedule</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #d6d8d4;
+            color: #132629;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        table th {
+            background-color: #132629;
+            color: #fff;
+        }
+
+        .status-paid {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .status-unpaid {
+            background-color: #ffcdd2;
+            color: #c62828;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #aba174;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background-color: #132629;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Trainer Payment Schedule</h2>
+        <p><strong>Trainer:</strong> {{ trainer_name }} | <strong>Salary:</strong> ${{ salary }}</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Payment Amount</th>
+                    <th>Payment Date</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr class="{% if payment.PaymentStatus == 'Paid' %}status-paid{% else %}status-unpaid{% endif %}">
+                    <td>${{ payment.PaymentAmount }}</td>
+                    <td>{{ payment.Payment_Date }}</td>
+                    <td>{{ payment.PaymentDue_Date }}</td>
+                    <td>{{ payment.PaymentStatus }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="text-align: center;">
+            <a href="/trainer/{{ session['trainer_id'] }}/classes" class="back-btn">Back to Classes</a>
+        </div>
+    </div>
+</body>
+</html>

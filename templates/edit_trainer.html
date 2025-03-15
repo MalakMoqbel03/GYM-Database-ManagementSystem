@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Trainer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <nav class="navbar">
+                <span class="logo">Fitness Factory Gym</span>
+                <a href="/" class="homepage-link">Home</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <h2 class="heading">Edit <span>Trainer</span></h2>
+        <form action="/trainers/edit/{{ trainer.Trainer_ID }}" method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ trainer.First_Name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ trainer.Last_Name }}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address_trainers" value="{{ trainer.Address_trainers }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" name="phone_number_trainer" value="{{ trainer.PhoneNumber_Trainer }}" required>
+                    {% if phone_error %}
+                        <small id="phone-error" style="color: red;">{{ phone_error }}</small>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{ trainer.Email }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter new password (leave blank to keep current)">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="salary">Salary</label>
+                    <input type="number" id="salary" name="salary" value="{{ trainer.Salary }}" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="snn">Social Security Number</label>
+                    <input type="text" id="snn" name="snntrainer" value="{{ trainer.SNNTrainer }}" required>
+                    {% if ssn_error %}
+                        <small id="snn-error" style="color: red;">{{ ssn_error }}</small>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="specialty">Specialty</label>
+                <div id="specialty-checkboxes">
+                    <label><input type="checkbox" name="specialty" value="Yoga" {% if 'Yoga' in trainer.Specialty %}checked{% endif %}> Yoga</label>
+                    <label><input type="checkbox" name="specialty" value="Crossfit" {% if 'Crossfit' in trainer.Specialty %}checked{% endif %}> Crossfit</label>
+                    <label><input type="checkbox" name="specialty" value="Cardio" {% if 'Cardio' in trainer.Specialty %}checked{% endif %}> Cardio</label>
+                    <label><input type="checkbox" name="specialty" value="Strength Training" {% if 'Strength Training' in trainer.Specialty %}checked{% endif %}> Strength Training</label>
+                    <label><input type="checkbox" name="specialty" value="Zumba" {% if 'Zumba' in trainer.Specialty %}checked{% endif %}> Zumba</label>
+                    <label><input type="checkbox" name="specialty" value="Pilates" {% if 'Pilates' in trainer.Specialty %}checked{% endif %}> Pilates</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="agetrainer" value="{{ trainer.AgeTrainer }}" min="18" required>
+            </div>
+            <button type="submit" class="btn">Update Trainer</button>
+        </form>
+    </div>
+</body>
+</html>

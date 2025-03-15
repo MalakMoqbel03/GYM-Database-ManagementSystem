@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainee Bills</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #132629;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        header .navbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        header .navbar li {
+            margin: 0 15px;
+        }
+
+        header .navbar a {
+            text-decoration: none;
+            color: white;
+            font-size: 1em;
+        }
+
+        header .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Container styling */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #132629;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        table th {
+            background-color: #132629;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .status-paid {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-unpaid {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Button styling */
+        .control-btn {
+            padding: 10px 15px;
+            background-color: #132629;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9em;
+        }
+
+        .control-btn:hover {
+            background-color: #132629;
+            color: white;
+        }
+
+        /* Checkbox styling */
+        input[type="checkbox"] {
+            transform: scale(1.5);
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">Fitness Factory Gym</div>
+        <ul class="navbar">
+            <li><a href="/admin_dashboard">Home</a></li>
+        </ul>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Trainee Bills</h2>
+
+        <!-- Bills Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Bill ID</th>
+                    <th>Trainee</th>
+                    <th>Amount</th>
+                    <th>Bill Date</th>
+                    <th>Due Date</th>
+                    <th>Payment Method</th>
+                    <th>Status</th>
+                    <th>Control</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bill in bills %}
+                <tr class="{% if bill.BillStatus %}status-paid{% else %}status-unpaid{% endif %}">
+                    <td>{{ bill.Bill_ID }}</td>
+                    <td>{{ bill.First_Name }} {{ bill.Last_Name }}</td>
+                    <td>${{ bill.BillAmount }}</td>
+                    <td>{{ bill.Bill_Date }}</td>
+                    <td>{{ bill.Due_Date }}</td>
+                    <td>{{ bill.BillMethod }}</td>
+                    <td>{{ 'Paid' if bill.BillStatus else 'Unpaid' }}</td>
+                    <td>
+                        <form action="/update_bill_status/{{ bill.Bill_ID }}" method="POST">
+                            <input type="checkbox" name="bill_status" {% if bill.BillStatus %}checked{% endif %} onchange="this.form.submit()">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Back to Dashboard Button -->
+        <a href="/admin_dashboard" class="control-btn">Back to Admin Dashboard</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Fitness Factory Gym. All rights reserved.
+    </footer>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Plans</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* General body styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f3f3f3;
+            color: #132629;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #aba174;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        header .nav-links a {
+            font-size: 1.4rem;
+            color: #ffffff;
+            text-decoration: none;
+            margin-right: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        header .nav-links a:hover {
+            background-color: #ffffff;
+            color: #aba174;
+        }
+
+        /* Content section */
+        .content {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(to bottom right, #d6d8d4, #ffffff);
+        }
+
+        .content h1 {
+            font-size: 3.5rem;
+            color: #132629;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            font-size: 1.5rem;
+            margin: 20px auto;
+            color: #46514a;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+
+        .highlight {
+            color: #aba174;
+            font-weight: bold;
+        }
+
+        /* Plans section */
+        .plans {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin: 50px 20px;
+        }
+
+        .plan-card {
+            background: #ffffff;
+            border: 3px solid #aba174;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .plan-card h2 {
+            font-size: 2.5rem;
+            color: #132629;
+            margin-bottom: 15px;
+        }
+
+        .plan-card p {
+            font-size: 1.3rem;
+            color: #46514a;
+            margin: 20px 0;
+        }
+
+        .plan-card .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #aba174;
+            margin: 25px 0;
+        }
+
+        /* Footer section */
+        footer {
+            background-color: #aba174;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 300px;
+        }
+
+        footer p {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="/" class="logo">Fitness Factory Gym</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+        </div>
+    </header>
+
+    <!-- Content Section -->
+    <div class="content">
+        <h1>Explore Our Gym Plans</h1>
+        <p>
+            At <span class="highlight">Fitness Factory Gym</span>, we offer flexible plans tailored to suit your fitness goals and lifestyle. Whether you're looking for basic gym access or an all-inclusive VIP experience, we have the perfect plan for you!
+        </p>
+    </div>
+
+    <!-- Plans Section -->
+    <div class="plans">
+        <!-- Basic Plan -->
+        <div class="plan-card">
+            <h2>Basic Plan</h2>
+            <p>
+                Enjoy unlimited access to our gym equipment and facilities during regular hours. Ideal for fitness enthusiasts just starting out!
+            </p>
+            <p class="price">$50 / Month</p>
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="plan-card">
+            <h2>Premium Plan</h2>
+            <p>
+                Includes everything in the Basic Plan, plus access to group fitness classes and exclusive training workshops.
+            </p>
+            <p class="price">$100 / Month</p>
+        </div>
+
+        <!-- VIP Plan -->
+        <div class="plan-card">
+            <h2>VIP Plan</h2>
+            <p>
+                The ultimate gym experience! Enjoy personalized training sessions, nutrition coaching, and full access to all gym amenities.
+            </p>
+            <p class="price">$200 / Month</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Fitness Factory Gym. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

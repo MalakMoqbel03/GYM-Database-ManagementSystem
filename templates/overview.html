@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Overview</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Times New Roman', sans-serif;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .choice-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .choice-button {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .choice-button:hover {
+            background-color: #7d9483;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Fitness Factory Gym!</h1>
+    <p>we have multiple plans that can !</p>
+    
+    <div class="choice-container">
+        <a href="/food_subscriptions" class="choice-button">Food Plans</a>
+        <a href="/plans" class="choice-button">Gym Plans</a>
+        <a href="/choose_both" class="choice-button">Both (Discount!)</a>
+    </div>
+</body>
+</html>

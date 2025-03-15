@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Factory Gym</title>
+    <!-- BoxIcons for menu icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <a href="#home" class="logo">Fitness <span>Factory Gym</span></a>
+        <div class='bx bx-menu' id="menu-icon"></div>
+        <ul class="navbar">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/gym_plans">GYM Plans</a></li>
+            <li><a href="/food_plans">Food Plans</a></li>
+        </ul>
+        <div class="top-btn">
+            <a href="/join_us" class="nav-btn">Join Us</a>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Be Strong</h3>
+            <h1>Be Healthy</h1>
+            <h3><span class="multiple-text">BodyBuilding</span></h3>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reprehenderit ea suscipit, consectetur corporis eaque minima.</p>
+            
+        </div>
+    </section>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flashes">
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Additional sections can go here -->
+
+    <!-- Link to JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Trainers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <!-- Gym Name -->
+        <nav class="navbar">
+            <span class="logo">Fitness Factory Gym</span>
+            <!-- Home Link -->
+            <a href="/admin_dashboard" class="homepage-link">Home</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <h2 class="heading">Registered <span>Trainers</span></h2>
+
+    <!-- Search Bar -->
+    <div style="margin-bottom: 1rem; text-align: center;">
+        <input type="text" id="searchInput" placeholder="Search by First Name, Specialty, or Email" 
+               class="search-bar">
+    </div>
+
+    <!-- Trainers Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Specialty</th>
+                <th>Phone Number</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="trainersTableBody">
+            {% for trainer in trainers %}
+            <tr>
+                <td>{{ trainer.First_Name }}</td>
+                <td>{{ trainer.Last_Name }}</td>
+                <td>{{ trainer.Specialty }}</td>
+                <td>{{ trainer.PhoneNumber_Trainer }}</td>
+                <td>
+                    {% if trainer.is_deleted %}
+                        <span style="color: red;">Deleted</span>
+                    {% else %}
+                        <span style="color: green;">Active</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="/trainer/profile/{{ trainer.Trainer_ID }}" class="btn">View Profile</a>
+                        <a href="/trainers/edit/{{ trainer.Trainer_ID }}" class="btn">Edit</a>
+                        
+                        {% if not trainer.is_deleted %}
+                        <!-- Soft Delete Button -->
+                        <form action="/trainers/delete/{{ trainer.Trainer_ID }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn">Soft Delete</button>
+                        </form>
+                        {% else %}
+                        <!-- Restore Button -->
+                        <form action="/trainers/restore/{{ trainer.Trainer_ID }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn">Restore</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Register New Trainer Button -->
+    <div class="actions" style="margin-top: 1rem;">
+        <a href="/trainers/register" class="btn">Register New Trainer</a>
+    </div>
+
+    <!-- View Trainer Schedule Form -->
+    <div class="trainer-schedule-form" style="margin-top: 2rem; text-align: center;">
+        <form action="/schedules/view" method="GET">
+            <label for="trainer_id">Enter Trainer ID to View Schedule:</label>
+            <input type="text" id="trainer_id" name="trainer_id" required>
+            <button type="submit" class="btn">View Schedule</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('searchInput');
+        const tableBody = document.getElementById('trainersTableBody');
+        const rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+
+            rows.forEach(row => {
+                const firstName = row.cells[0].textContent.toLowerCase();
+                const specialty = row.cells[2].textContent.toLowerCase();
+                const phone = row.cells[3].textContent.toLowerCase();
+
+                if (firstName.includes(query) || specialty.includes(query) || phone.includes(query)) {
+                    row.style.display = ''; // Show row
+                } else {
+                    row.style.display = 'none'; // Hide row
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

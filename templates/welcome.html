@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="welcome-container">
+        <div class="semi-circle">
+            <h1>Welcome Back, {{ username }}!</h1>
+            <p>Your Role: {{ role }}</p>
+            <p>Your ID: {{ user_id }}</p>
+        </div>
+    </div>
+</body>
+</html>

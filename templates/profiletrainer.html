@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        :root {
+            --bg-color: rgba(255, 255, 255, 0.95);
+            --card-bg: #ffffff;
+            --text-color: #132629;
+            --main-color: #2b6777;
+            --button-color: #aba174;
+            --shadow-color: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/profile_bg.avif') }}") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--bg-color);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px var(--shadow-color);
+            max-width: 700px;
+            width: 90%;
+            overflow: hidden;
+        }
+
+        header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            padding: 1rem 2rem;
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .header-left {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--main-color);
+        }
+
+        .btn-header {
+            padding: 0.5rem 1rem;
+            background-color: var(--main-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-header:hover {
+            background-color: var(--button-color);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--main-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .schedule {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            row-gap: 1rem;
+            column-gap: 1rem;
+            margin: 0 auto;
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .schedule .label {
+            font-weight: bold;
+            color: var(--main-color);
+        }
+
+        .schedule .value {
+            color: var(--text-color);
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--main-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--button-color);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">Fitness Factory Gym</div>
+    </header>
+
+    <div class="container">
+        <h2>Trainer Profile</h2>
+        <div class="schedule">
+            <div class="label">Name:</div>
+            <div class="value">{{ trainer.First_Name }} {{ trainer.Last_Name }}</div>
+
+            <div class="label">Specialty:</div>
+            <div class="value">{{ trainer.Specialty }}</div>
+
+            <div class="label">Email:</div>
+            <div class="value">{{ trainer.Email }}</div>
+
+            <div class="label">Phone:</div>
+            <div class="value">{{ trainer.PhoneNumber_Trainer }}</div>
+
+            <div class="label">Address:</div>
+            <div class="value">{{ trainer.Address_trainers }}</div>
+
+            <div class="label">SSN:</div>
+            <div class="value">{{ trainer.SNNTrainer }}</div>
+
+            <div class="label">Salary:</div>
+            <div class="value">${{ trainer.Salary }}</div>
+        </div>
+
+        <div class="btn-container">
+            <a href="/admin_dashboard" class="btn">Back to home page</a>
+        </div>
+    </div>
+</body>
+</html>
